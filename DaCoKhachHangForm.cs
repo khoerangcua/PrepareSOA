@@ -3,17 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using POSService;
 
 public class DaCoKhachHangForm {
 
     public DaCoKhachHangForm() {
     }
 
-    public void khachHang;
+    public POSService.KhachHang khachHang;
 
 
     public void LoadForm() {
-        // TODO implement here
+        // TODO Load thông tin khách hàng lên form
     }
 
 }

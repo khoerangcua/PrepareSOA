@@ -9,18 +9,22 @@ public class ChuaCoKhachHangForm {
     public ChuaCoKhachHangForm() {
     }
 
-    public void khachHangDaChon;
+    public POSService.KhachHang khachHangDaChon;
 
-    public void DaChonKhachHangEvent;
+    public event EventHandler DaChonKhachHangEvent;
 
 
-
+    // Hàm này được gán vào sự kiện nhân viên chọn khách hàng
     public void OnChonKhachHangListener() {
-        // TODO implement here
+        ChonKhachHangForm chonKhachHangForm = new ChonKhachHangForm();
+        chonKhachHangForm.ChonKhachHangEvent += OnDaChonKhachHangListener;
+        chonKhachHangForm.ShowDialog();
     }
 
-    public void OnDaChonKhachHangListener() {
-        // TODO implement here
+    
+    public void OnDaChonKhachHangListener(object sender, EventArgs e) {
+        khachHangDaChon = ((ChonKhachHangForm)sender).khachHangTimThay;
+        DaChonKhachHangEvent(this, new EventArgs());
     }
 
 }

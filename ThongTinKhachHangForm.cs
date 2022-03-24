@@ -9,15 +9,12 @@ public class ThongTinKhachHangForm {
     public ThongTinKhachHangForm() {
     }
 
-    public void Attribute1;
-
-
     public void HienThiGiaoDienMacDinh() {
-        // TODO implement here
+        // TODO: Reset tất cả
     }
 
-    public void HienThiThongTinKhachHang() {
-        // TODO implement here
+    public void HienThiThongTinKhachHang(POSService.KhachHang khachHang) {
+        // TODO hiên thị thông tin khách hàng lên giao diện
     }
 
 }

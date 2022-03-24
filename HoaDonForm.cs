@@ -10,15 +10,23 @@ public class HoaDonForm {
 
     public HoaDonForm() {
         experience_Layer = new Experience_Layer();
+        system_Layer = new System_Layer();
+
         phuongThucThanhToanForm = new PhuongThucThanhToanForm();
         phuongThucThanhToanForm.ChonPhuongThucThanhToanEvent += OnChonPhuongThucThanhToanListener;
         luaChonMailForm = new LuaChonMailForm();
         luaChonMailForm.ChonGuiMailEvent += OnChonGuiMailListener;
+        chuaCoKhachHangForm = new ChuaCoKhachHangForm();
+        chuaCoKhachHangForm.DaChonKhachHangEvent += OnChonKhachHangListener;
+
+        // Load các Form lên panel tương ứng
+        // Show các Form
+
         
         
     }
 
-    public void chuaCoKhachHangForm;
+    public ChuaCoKhachHangForm chuaCoKhachHangForm;
 
     public void daCoKhachHangForm;
 
@@ -34,12 +42,13 @@ public class HoaDonForm {
 
     public bool guiMail;
 
-    public void khachHangDaChon;
+    public POSService.KhachHang khachHangDaChon;
 
-    public void thanhToanThanhCongEvent;
+    public event EventHandler thanhToanThanhCongEvent;
 
-    public void hoaDonMoi;
+    public POSService.HoaDon hoaDonMoi;
     Experience_Layer experience_Layer;
+    System_Layer system_Layer;
 
 
 
@@ -89,16 +98,28 @@ public class HoaDonForm {
         guiMail = ((LuaChonMailForm) sender).guiMail;
     }
 
-    public void OnChonKhachHangListener() {
-        // TODO implement here
+    public void OnChonKhachHangListener(object sender, EventArgs e) {
+        khachHangDaChon = ((ChuaCoKhachHangForm)sender).khachHangDaChon;
+        bool capNhatThanhCong = system_Layer.UpdateKhachHangToHoaDon(hoaDon.IdHoaDon, khachHangDaChon.IdKhachHang);
+        if (capNhatThanhCong)
+        {
+            capNhatKhachHang();
+        }
+
     }
 
     public void capNhatKhachHang() {
-        // TODO implement here
+        DaCoKhachHangForm daCoKhachHangForm = new DaCoKhachHangForm();
+        daCoKhachHangForm.khachHang = khachHangDaChon;
+        // TODO: Thay thế chuaCoKhachHangForm bằng dacoKhachHangForm
+        daCoKhachHangForm.show();
+
     }
 
-    public void OnThanhToanListener() {
-        // TODO implement here
+    // Hàm này được gán vào sự kiện khi người dùng nhấn thanh toán
+    public void OnThanhToanListener(object sender, EventArgs e) {
+        hoaDonMoi = experience_Layer.ThanhToanHoaDon(hoaDon.IdHoaDon, phuongThucThanhToan, guiMail);
+        thanhToanThanhCongEvent(this, new EventArgs());
     }
 
 }

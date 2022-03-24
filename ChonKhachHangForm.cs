@@ -7,15 +7,26 @@ using System.Text;
 public class ChonKhachHangForm {
 
     public ChonKhachHangForm() {
+        timKiemKhachHangForm = new TimKiemKhachHangForm();
+        timKiemKhachHangForm += OnTimKiemKhachHangListener;
+        thongTinKhachHangForm = new ThongTinKhachHangForm();
+        
+        
+        // TODO: Hiển thị 2 form lên 2 panel
+
+        // TODO: Vô hiệu hóa nút chọn khách hàng
+
+
     }
 
     public TimKiemKhachHangForm timKiemKhachHangForm;
 
-    public TaoMoiKhachHangForm thongTinKhachHangForm;
+    public TaoMoiKhachHangForm taoMoiKhachHangForm;
+    public POSService.KhachHang khachHangTimThay;
 
-    public void KhachHangDaChon;
+    public ThongTinKhachHangForm thongTinKhachHangForm;
 
-    public void ChonKhachHangEvent;
+    public event EventHandler ChonKhachHangEvent;
 
 
 
@@ -25,16 +36,42 @@ public class ChonKhachHangForm {
         // TODO implement here
     }
 
-    public void OnTimKiemKhachHangListener() {
-        // TODO implement here
+    public void OnTimKiemKhachHangListener(object sender, EventArgs e) {
+
+        if (sender is TimKiemKhachHangForm)
+        {
+            khachHangTimThay = ((TimKiemKhachHangForm)sender).khachHangTimThay;
+        }
+        else
+        {
+            khachHangTimThay = ((TaoMoiKhachHangForm)sender).khachHangMoiThem;
+        }
+        
+
+        
+        if (khachHang == null)
+        {
+            // Nếu không tìm thấy khách hàng
+            thongTinKhachHangForm.HienThiGiaoDienMacDinh();
+            // Vô hiệu hóa nút chọn khách hàng
+        }
+        else
+        {
+            // Nếu như tìm thấy khách hàng
+            thongTinKhachHangForm.HienThiThongTinKhachHang(khachHang);
+            // Thôi vô hiệu hóa nút chọn khách hàng
+        }
     }
 
-    public void OnChonKhachHangListener() {
-        // TODO implement here
+    // Hàm này được gán vào sự kiện người dùng nhấn nút chọn khách hàng
+    public void OnChonKhachHangListener(object sender, EventArgs e) {
+        ChonKhachHangEvent(this, new EventArgs());
     }
 
+    // Hàm này được gán vào sự kiện người dùng nhấn nút thêm khách hàng
     public void OnThemMoiKhachHangListener() {
-        // TODO implement here
+        taoMoiKhachHangForm = new TaoMoiKhachHangForm();
+        taoMoiKhachHangForm.showDialog();
     }
 
 }

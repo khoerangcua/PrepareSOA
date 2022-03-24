@@ -17,6 +17,7 @@ public class MainForm {
         sanPhamsForm.themSanPhamEvent += OnThemSanPhamListener;
 
         hoaDonForm = new HoaDonForm();
+        hoaDonForm.thanhToanThanhCongEvent += LoadHoaDonMoi;
 
         system_Layer = new System_Layer();
 
@@ -59,8 +60,8 @@ public class MainForm {
         hoaDonForm.ThemSanPham(sanPham, soLuong);
     }
 
-    public void LoadHoaDonMoi() {
-        // TODO implement here
+    public void LoadHoaDonMoi(object sender, EventArgs e) {
+        hoaDonForm = ((HoaDonForm)sender).hoaDonMoi;
     }
 
 }
