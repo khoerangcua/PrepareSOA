@@ -9,19 +9,22 @@ public class SanPhamForm {
     public SanPhamForm() {
     }
 
-    public POSService.SanPham sanpham;
+    public POSService.SanPham sanPham;
 
-    public void themSanPhamEvent;
+    public event EventHandler themSanPhamEvent;
 
-    public void soLuong;
+    public int soLuong;
 
 
-    public void LoadSanPham(POSService.SanPham sanpham) {
-        this.sanpham = sanpham;
+    public void LoadSanPham(POSService.SanPham sanPham) {
+        this.sanPham = sanPham;
+
+        // TODO: Load dữ liệu lên giao diện
     }
 
-    public void OnThemSanPhamListener() {
-        // TODO implement here
+    // Sự kiện được gán vào nút nhấn thêm sản phẩm
+    public void OnThemSanPhamListener(Object sender, EventArgs e) {
+        themSanPhamEvent(this, new EventArgs());
     }
 
 }

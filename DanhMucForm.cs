@@ -9,20 +9,20 @@ public class DanhMucForm {
     public DanhMucForm() {
     }
 
-    public void danhMuc;
+    public POSService.DanhMuc danhMuc;
 
-    public void chonDanhMucEvent;
+    public event EventHandler chonDanhMucEvent;
 
 
     public void LoadDanhMuc(POSService.DanhMuc danhMuc) {
         this.danhMuc = danhMuc;
 
-        //TODO Load dữ liệu lên giao diện
+        //TODO: Load dữ liệu lên giao diện
     }
 
-// Hàm này gán cho sự kiện nhấn nút thêm
+    // Hàm gán cho sự kiện chọn danh mục
     public void OnChonDanhMucListener() {
-        // TODO implement here
+        chonDanhMucEvent(this, new EventArgs());
     }
 
 }

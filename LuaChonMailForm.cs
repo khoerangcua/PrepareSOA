@@ -7,15 +7,28 @@ using System.Text;
 public class LuaChonMailForm {
 
     public LuaChonMailForm() {
+        guiMail = false;
     }
 
-    public void guiMail;
+    public bool guiMail;
 
-    public void ChonGuiMailEvent;
+    public event EventHandler ChonGuiMailEvent;
 
 
+    // Hàm này được gán với sự kiện chọn gửi mail
     public void OnChonGuiMailListener() {
-        // TODO implement here
+
+        // Nếu như có chọn gửi mail
+        if (true)
+        {
+            guiMail = true;
+        }
+        else
+        {
+            guiMail = false;
+        }
+
+        ChonGuiMailEvent(this, new EventArgs());
     }
 
 }

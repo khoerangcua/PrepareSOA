@@ -9,17 +9,19 @@ public class HoaDonIttemForm {
     public HoaDonIttemForm() {
     }
 
-    public void hoaDon;
+    public POSService.ChiTietHoaDon chiTietHoaDon;
 
-    public void xoaSanPhamEvent;
+    public event EventHandler xoaSanPhamEvent;
 
 
-    public void LoadHoaDonItem() {
-        // TODO implement here
+    public void LoadHoaDonItem(POSService.ChiTietHoaDon chiTietHoaDon) {
+        this.chiTietHoaDon = chiTietHoaDon;
+        // TODO: load giao diện chi tiết hóa đơn
     }
 
-    public void OnXoaSanPhamListener() {
-        // TODO implement here
+    // Hàm này gán cho sự kiện nhấn nút xóa
+    public void OnXoaSanPhamListener(object sender, EventArgs e) {
+        xoaSanPhamEvent(this, new EventArgs());
     }
 
 }

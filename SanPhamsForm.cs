@@ -9,27 +9,32 @@ public class SanPhamsForm {
     public SanPhamsForm() {
     }
 
-    public List<POSService.SanPham> sanphams;
+    public List<POSService.SanPham> sanPhams;
 
-    public void sanPhamDaChon;
+    public POSService.SanPham sanPhamDaChon;
+
+    public int soLuong;
 
     public void themSanPhamEvent;
 
 
 
-    public void LoadSanPhams(List<POSService.SanPham> sanphams ) {
-        this.sanphams = sanphams;
-        foreach (var sanpham in sanphams)
+    public void LoadSanPhams(List<POSService.SanPham> sanPhams ) {
+        this.sanPhams = sanPhams;
+        foreach (var sanPham in sanPhams)
         {
             SanPhamForm sanPhamForm = new SanPhamForm();
-            sanPhamForm.LoadSanPham(sanpham);
+            sanPhamForm.themSanPhamEvent += OnThemSanPhamLintener;
+            sanPhamForm.LoadSanPham(sanPham);
 
             // Load sanPhamForm lên giao diện
         }
     }
 
-    public void OnThemSanPhamLintener() {
-        // TODO implement here
+    public void OnThemSanPhamLintener(object sender, EventArgs e) {
+        sanPhamDaChon = ((SanPhamForm) sender).sanPham;
+        soLuong = ((SanPhamForm) sender).soLuong;
+        themSanPhamEvent(this, new EventArgs());
     }
 
 }

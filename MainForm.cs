@@ -11,13 +11,21 @@ public class MainForm {
     public MainForm() {
         // Tạo mới đối tượng
         danhMucsForm = new DanhMucsForm();
-        sanPhamsForm = new SanPhamForm();
+        danhMucsForm.chonDanhMucEvent += OnChonDanhMucListener;
+
+        sanPhamsForm = new SanPhamsForm();
+        sanPhamsForm.themSanPhamEvent += OnThemSanPhamListener;
+
         hoaDonForm = new HoaDonForm();
-        System_Layer = new System_Layer();
+
+        system_Layer = new System_Layer();
+
+        // TODO: Load 3 form lên 3 panel
 
         // Load dữ liệu
-        danhMucSanPhams = System_Layer.this.System_Layer.GetDanhMucSanPham();
+        danhMucSanPhams = system_Layer.GetDanhMucSanPham();
         danhMucsForm.LoadDanhMucs(danhMucSanPhams);
+        hoaDonForm.hoaDon = system_Layer.TaoHoaDonMoi();
 
         
 
@@ -32,19 +40,23 @@ public class MainForm {
 
     public List<POSService.DanhMucSanPham> danhMucSanPhams;
 
-    private System_Layer System_Layer;
+    private System_Layer system_Layer;
 
     
 
 
 
 
-    public void OnChonDanhMucListener() {
-        // TODO implement here
+    public void OnChonDanhMucListener(object sender, EventArgs e) {
+        POSService.DanhMuc danhMuc = ((DanhMucsForm) sender).danhMucDangChon;
+        List<POSService.SanPham> sanPhams = system_Layer.GetSanPhams(danhMuc);
+        sanPhamsForm.LoadSanPhams(sanPhams);
     }
 
-    public void OnThemSanPhamListener() {
-        // TODO implement here
+    public void OnThemSanPhamListener(object sender, EventArgs e) {
+        POSService.SanPham sanPham = ((SanPhamsForm) sender).sanPhamDaChon;
+        int soLuong = ((SanPhamsForm) sender).soLuong;
+        hoaDonForm.ThemSanPham(sanPham, soLuong);
     }
 
     public void LoadHoaDonMoi() {

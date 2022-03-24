@@ -3,35 +3,43 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+// using Service
+using POSService;
 
 public class HoaDonForm {
 
     public HoaDonForm() {
+        experience_Layer = new Experience_Layer();
+        phuongThucThanhToanForm = new PhuongThucThanhToanForm();
+        phuongThucThanhToanForm.ChonPhuongThucThanhToanEvent += OnChonPhuongThucThanhToanListener;
+        luaChonMailForm = new LuaChonMailForm();
+        luaChonMailForm.ChonGuiMailEvent += OnChonGuiMailListener;
+        
+        
     }
 
     public void chuaCoKhachHangForm;
 
     public void daCoKhachHangForm;
 
-    public void hoaDonItemForms;
+    public PhuongThucThanhToanForm phuongThucThanhToanForm;
 
-    public void phuongThucThanhToanForm;
+    public LuaChonMailForm luaChonMailForm;
 
-    public void luaChonMailForm;
+    public POSService.HoaDon hoaDon;
 
-    public void hoaDon;
+    public List<POSService.ChiTietHoaDon> chiTietHoaDon;
 
-    public void chiTietHoaDon;
+    public byte phuongThucThanhToan;
 
-    public void phuongThucThanhToan;
-
-    public void guiMail;
+    public bool guiMail;
 
     public void khachHangDaChon;
 
     public void thanhToanThanhCongEvent;
 
     public void hoaDonMoi;
+    Experience_Layer experience_Layer;
 
 
 
@@ -39,28 +47,46 @@ public class HoaDonForm {
 
 
 
-    public void ThemSanPham() {
-        // TODO implement here
+    public void ThemSanPham(POSService.SanPham sanPham, int soLuong) {
+        hoaDon = experience_Layer.ThemSanPhamVaoHoaDon(hoaDon.IdHoaDon, hoaDon.IdSanPham, soLuong);
+        CapNhatHoaDon();
+        chiTietHoaDon = experience_Layer.GetHoaDonItems(hoaDon.IdHoaDon);
+        CapNhatChiTietHoaDon();
+
     }
 
     public void CapNhatHoaDon() {
-        // TODO implement here
+        // TODO: Cập nhật lại giao diện hóa đơn đã cập nhât
     }
 
     public void CapNhatChiTietHoaDon() {
-        // TODO implement here
+        
+        foreach (var cthd in chiTietHoaDon)
+        {
+            // Tạo giao diện hóa đơn item
+            HoaDonIttemForm hoaDonIttemForm = new HoaDonIttemForm();
+            hoaDonIttemForm.xoaSanPhamEvent += OnXoaSanPhamListener;
+            hoaDonIttemForm.LoadHoaDonItem(cthd);
+
+            //TODO: Load chi tiết hóa đơn lên hoadonPanel
+        }
     }
 
-    public void OnXoaSanPhamListener() {
-        // TODO implement here
+    public void OnXoaSanPhamListener(object sender, EventArgs e) {
+        POSService.ChiTietHoaDon chiTietHoaDon = ((HoaDonIttemForm) sender).chiTietHoaDon;
+        hoaDon = experience_Layer.XoaSanPhamKhoiHoaDon(hoaDon.IdHoaDon, chiTietHoaDon.IdSanPham);
+        CapNhatHoaDon();
+        chiTietHoaDon = experience_Layer.GetHoaDonItems(hoaDon.IdHoaDon);
+        CapNhatChiTietHoaDon();
+
     }
 
-    public void OnChonPhuongThucThanhToanListener() {
-        // TODO implement here
+    public void OnChonPhuongThucThanhToanListener(object sender, EventArgs e) {
+        phuongThucThanhToan = ((PhuongThucThanhToanForm) sender).phuongThucThanhToan;
     }
 
-    public void OnChonGuiMailListener() {
-        // TODO implement here
+    public void OnChonGuiMailListener(object sender, EventArgs e) {
+        guiMail = ((LuaChonMailForm) sender).guiMail;
     }
 
     public void OnChonKhachHangListener() {

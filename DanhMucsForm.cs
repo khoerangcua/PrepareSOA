@@ -20,12 +20,12 @@ public class DanhMucsForm {
 
     public void LoadDanhMucs(List<POSService.DanhMucSanPham> danhMucSanPhams) {
         this.danhMucs = danhMucSanPhams;
-        foreach (var danhmuc in danhMucs)
+        foreach (var danhMuc in danhMucs)
         {
             // Tạo giao diện cho mỗi danh mục
-            DanhMucForm danhMuc = new DanhMucForm();
-            danhmuc.chonDanhMucEvent += OnChonDanhMucListener
-            danhMuc.LoadDanhMuc(danhmuc);
+            DanhMucForm danhMucForm = new DanhMucForm();
+            danhMucForm.chonDanhMucEvent += OnChonDanhMucListener;
+            danhMucForm.LoadDanhMuc(danhMuc);
 
             // TODO: Load danhMuc lên panel
         }
